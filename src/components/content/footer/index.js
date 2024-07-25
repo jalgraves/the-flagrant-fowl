@@ -28,7 +28,7 @@ export const Footer = () => {
       h2Padding=".5rem"
       h3Padding="1rem"
       h3Margin="auto"
-      h3Color={COLORS.black}
+      h3Color={COLORS.white}
       margin="3rem auto 1rem auto"
       maxWidth="80vw"
       outline={`.2rem solid ${COLORS.darkGray}`}
@@ -37,7 +37,8 @@ export const Footer = () => {
       width="100vw"
     >
       <footer>
-        <img src="/images/logos/the-flagrant-fowl.gif" alt="The Flagrant Fowl" />
+        <img src="/images/logos/1x/logo-black-red.png" alt="The Flagrant Fowl" />
+        <h2>172 Portland Street</h2>
         <h2>Boston Mass</h2>
         {/*
         <h2>Stay Connected</h2>

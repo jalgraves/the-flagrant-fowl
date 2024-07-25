@@ -1,7 +1,7 @@
 import React from "react"
-import { config } from "../../utils/main.js"
+import { config } from "../../utils/index.js"
 import { ContentSection } from "@jalgraves/react-components-library"
-import { HeroHeader } from "./heroHeader/main.js"
+import { HeroHeader } from "./heroHeader/index.js"
 const COLORS = config.colors
 const FONTS = config.fonts
 

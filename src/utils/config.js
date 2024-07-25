@@ -39,8 +39,8 @@ const CONFIG = {
       "menuList": true,
       "topMenu": false,
       "metadata": {
-        "title": "JALGraves",
-        "description": "The home of JALGraves",
+        "title": "The Fowl",
+        "description": "The home of The Fowl",
         "keywords": "boston, massachusetts"
       }
     },
@@ -51,21 +51,9 @@ const CONFIG = {
       "menuList": true,
       "topMenu": true,
       "metadata": {
-        "title": "About JALGraves",
+        "title": "About The Fowl",
         "description": "Information about JALGraves",
         "keywords": ""
-      }
-    },
-    "blog": {
-      "name": "blog",
-      "icon": "faComment",
-      "text": "Blog",
-      "menuList": true,
-      "topMenu": true,
-      "metadata": {
-        "title": "JALGraves Blog",
-        "description": "JALGraves' blog",
-        "keywords": "tech, blog, devops, software, software development, software engineering, terraform, k8s, kubernetes, aws, eks, argo, argocd, terraform cloud, tfc"
       }
     },
     "contact": {
@@ -75,20 +63,8 @@ const CONFIG = {
       "menuList": true,
       "topMenu": true,
       "metadata": {
-        "title": "Contact JALGraves",
-        "description": "JALGraves' contact information",
-        "keywords": ""
-      }
-    },
-    "github": {
-      "name": "https://github.com/jalgraves",
-      "icon": "faGithub",
-      "text": "GitHub",
-      "menuList": true,
-      "topMenu": true,
-      "metadata": {
-        "title": "JALGRaves GitHub",
-        "description": "",
+        "title": "Contact The Fowl",
+        "description": "The Flagrant Fowl' contact information",
         "keywords": ""
       }
     }

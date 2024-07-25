@@ -6,7 +6,8 @@ export SELF ?= $(MAKE)
 MAKE_FILES = ${MAKE_PATH}/helm/the-flagrant-fowl/Makefile ${MAKE_PATH}/Makefile
 
 dockerhub ?= jalgraves
-image_name ?= the-flagrant-fowl
+name ?= the-flagrant-fowl
+image_name ?= $(name)
 port ?= ${APP_PORT}
 version ?= $(shell jq -r .version package.json | tr -d '"')
 git_hash = $(shell git rev-parse --short HEAD)

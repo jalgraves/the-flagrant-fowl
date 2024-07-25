@@ -1,7 +1,8 @@
 FROM node:20.9.0-buster-slim AS build
 
-RUN apt-get update  && \
-    apt-get install -y \
+RUN apt-get update
+
+RUN apt-get install -y \
         apt-utils \
         python \
         g++ \

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client"
 import { MainMenuBar } from "@jalgraves/react-components-library"
 import ReactRoutes from "./components/reactRoutes.js"
 import { Footer } from "./components/content/footer/index.js"
-import { config } from "./utils/main.js"
+import { config } from "./utils/index.js"
 const PAGES = config.pages
 const COLORS = config.colors
 const FONTS = config.fonts
@@ -58,22 +58,22 @@ const slideMenu = {
   },
   header: {
     fontFamily: FONTS.content,
-    imgSource: `${config.urls.static}/img/logos/1x/logo-white-yellow.png`
+    imgSource: `${config.urls.static}/img/logos/logo-black-red.png`
   }
 }
 
 topBar.render(
   <MainMenuBar
     pages={PAGES}
-    fontColor={COLORS.black}
+    fontColor={COLORS.white}
     fontFamily={FONTS.content}
-    barColor={COLORS.white}
-    hamburgerBackground={COLORS.dodgerBlue}
+    barColor={COLORS.black}
+    hamburgerBackground={COLORS.white}
     hoverColor={COLORS.dodgerBlue}
     navBarLogoImgStyles={IMG_STYLES}
     mainMenuBarBorderBottom="1px solid black"
     slideMenu={slideMenu}
-    mainMenuBarImgSource={`${config.urls.static}/img/logos/1x/logo-white-yellow.png`}
+    mainMenuBarImgSource={`${config.urls.static}/img/logos/logo-white-yellow.png`}
     mainMenuBarBoxShadow={`2px 2px 6px ${COLORS.darkGray}`}
   />
 )

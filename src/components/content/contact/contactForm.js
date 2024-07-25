@@ -1,6 +1,6 @@
 import React from "react"
 import { ContactForm, ContentSection, Icon } from "@jalgraves/react-components-library"
-import { config } from "../../../utils/main.js"
+import { config } from "../../../utils/index.js"
 const COLORS = config.colors
 const FONTS = config.fonts
 

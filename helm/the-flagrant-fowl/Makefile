@@ -23,7 +23,7 @@ helm/install: helm/context
 	sleep 5
 
 ## Delete Helm release and redeploy
-helm/redeploy: helm/delete helm/install
+helm/redeploy: helm/uninstall helm/install
 
 ## Run Helm template
 template:
@@ -55,6 +55,3 @@ helm/uninstall:
 	kubectl config use-context $(context) && \
 		helm uninstall --namespace $(namespace) $(name) || true
 
-
-## Redeploy app
-helm/redeploy: helm/stop_pf helm/uninstall
