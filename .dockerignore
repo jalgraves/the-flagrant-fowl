@@ -1,0 +1,14 @@
+Dockerfile
+Makefile
+LICENSE
+README.md
+.git
+.gitignore
+.eslintrc
+.eslint.json
+node_modules/
+.envrc
+.pre-commit-config.yaml
+.tool-versions
+.circleci/
+.github/

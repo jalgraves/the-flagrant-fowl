@@ -1,0 +1,29 @@
+{{- if .Values.istio.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "the-flagrant-fowl.fullname" . }}
+spec:
+  hosts:
+  - "{{ include "the-flagrant-fowl.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
+  - "{{ include "the-flagrant-fowl.fullname" . }}.{{ .Values.regionCode }}.{{ .Release.Namespace }}.aws.beantownpub.com"
+  - "demo.{{ .Release.Namespace }}.jalgraves.com"
+  - "the-flagrant-fowl.com"
+  - "www.the-flagrant-fowl.com"
+
+  gateways:
+  - istio-system/web-gateway
+  - mesh # applies to all the sidecars in the mesh
+  http:
+  - route:
+    - destination:
+        port:
+          number: {{ .Values.containerPort }}
+        host: "{{ include "the-flagrant-fowl.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
+        subset: {{ include "the-flagrant-fowl.fullname" . }}
+      headers:
+        response:
+          remove:
+          - "x-envoy-upstream-service-time"
+          - "x-powered-by"
+{{- end }}

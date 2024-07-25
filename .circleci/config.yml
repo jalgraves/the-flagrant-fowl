@@ -1,0 +1,124 @@
+version: 2.1
+executors:
+  debian:
+    docker:
+    - image: cimg/python:3.7
+  node:
+    docker:
+      - image: cimg/node:18.16.0
+
+commands:
+  install_k8s_dependencies:
+    description: Install dependencies for deploying to K8s cluster
+    steps:
+      - run:
+          name: Install kubectl
+          command: |
+            sudo apt-get update -y && sudo apt-get install -y curl
+            sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            kubectl config set-credentials jalbot --token=$JALBOT_TOKEN
+            kubectl config set-cluster prod --server=$K8S_SERVER --insecure-skip-tls-verify=true
+            kubectl config set-context jalbot --cluster=prod --user=jalbot
+            kubectl config use-context jalbot
+      - run:
+          name: Install helm
+          command: |
+            sudo apt-get install apt-transport-https gnupg2  --yes
+            sudo curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+            sudo echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+            sudo apt-get update
+            sudo apt-get install -y helm
+  install_build_dependencies:
+    description: Install dependencies for versioning
+    steps:
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y git jq sass
+  check_tags:
+    description: Check if git tag matches package.json version
+    steps:
+      - run:
+          name: Check tags
+          command: |
+            VERSION=$(jq -r .version package.json | tr -d '"')
+            GIT_TAG=$(git describe)
+            echo "Version: ${VERSION} | Tag: ${GIT_TAG}"
+            if [ "$VERSION" != "$GIT_TAG" ]; then
+                circleci-agent step halt
+            fi
+
+jobs:
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies & run lint
+          command: |
+            npm install
+            npx eslint .
+
+  build_and_publish:
+    executor: debian
+    resource_class: large
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - install_build_dependencies
+      - run:
+          name: Build Image
+          command: |
+            export VERSION=$(jq -r .version package.json | tr -d '"')
+            mkdir -p dist/public/css
+            sass ${PWD}/src/sass/style.sass ${PWD}/dist/public/css/style.css
+            docker build \
+              -t thehubpub:$VERSION \
+              --build-arg node_env=production \
+              --build-arg git_hash=$CIRCLE_SHA1 \
+              --build-arg version=$VERSION .
+      - check_tags
+      - run:
+          name: Publish Image
+          command: |
+            export VERSION=$(jq -r .version package.json | tr -d '"')
+            echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+            docker tag thehubpub:$VERSION $DOCKER_USERNAME/thehubpub:$VERSION
+            docker push $DOCKER_USERNAME/thehubpub:$VERSION
+
+  deploy:
+    circleci_ip_ranges: false
+    executor: debian
+    steps:
+      - checkout
+      - install_build_dependencies
+      - check_tags
+      - install_k8s_dependencies
+      - run:
+          name: Add Helm repo
+          command: |
+            helm repo add beantown $HELM_REPO
+            kubectl config get-contexts
+            kubectl get pods -n prod
+      - run:
+          name: Deploy thehubpub
+          command: |
+            export VERSION=$(jq -r .version package.json | tr -d '"')
+            helm repo update
+            helm upgrade --install thehubpub beantown/hubpub \
+              --namespace prod \
+              --set global.env=prod \
+              --set image.tag=$VERSION \
+              --set logLevel=tiny
+
+workflows:
+  thehubpub:
+    jobs:
+      - lint
+      - build_and_publish
+      - deploy:
+          requires:
+            - build_and_publish
