@@ -28,15 +28,16 @@ export const StyledHero = styled.div`
   }
   h2 {
     color: ${props => props.h2Color || COLORS.white};
-    font-family: ${FONTS.script};
+    font-family: ${FONTS.gothamUltra};
     font-size: 2.5rem;
     font-weight: 900;
-    letter-spacing: .1em;
+    letter-spacing: .2em;
     line-height: 100%;
     margin: auto;
     max-width: 80%;
     padding: .5rem 0;
     text-shadow: 1px 1px 4px #000000;
+    text-transform: uppercase;
   }
   img {
     margin: .5rem auto;

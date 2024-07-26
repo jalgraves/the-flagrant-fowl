@@ -6,10 +6,7 @@ metadata:
 spec:
   hosts:
   - "{{ include "the-flagrant-fowl.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
-  - "{{ include "the-flagrant-fowl.fullname" . }}.{{ .Values.regionCode }}.{{ .Release.Namespace }}.aws.beantownpub.com"
-  - "demo.{{ .Release.Namespace }}.jalgraves.com"
-  - "the-flagrant-fowl.com"
-  - "www.the-flagrant-fowl.com"
+  - thefowl.jalgraves.com
 
   gateways:
   - istio-system/web-gateway

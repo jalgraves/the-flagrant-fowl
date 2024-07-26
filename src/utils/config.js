@@ -40,8 +40,8 @@ const CONFIG = {
       "topMenu": false,
       "metadata": {
         "title": "The Fowl",
-        "description": "The home of The Fowl",
-        "keywords": "boston, massachusetts"
+        "description": "Home of The Fowl",
+        "keywords": "boston, massachusetts, ma, north station, north, station, portland street, food, drink, beer, wine, spirits, cocktails, appetizers, entrees, celtics, bruins, td garden, garden, the garden, garden strong"
       }
     },
     "about": {
@@ -52,19 +52,7 @@ const CONFIG = {
       "topMenu": true,
       "metadata": {
         "title": "About The Fowl",
-        "description": "Information about JALGraves",
-        "keywords": ""
-      }
-    },
-    "contact": {
-      "name": "contact",
-      "icon": "faEnvelope",
-      "text": "Contact",
-      "menuList": true,
-      "topMenu": true,
-      "metadata": {
-        "title": "Contact The Fowl",
-        "description": "The Flagrant Fowl' contact information",
+        "description": "Information about The Fowl",
         "keywords": ""
       }
     }
